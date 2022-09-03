@@ -69,7 +69,7 @@ function handlePostback(sender_psid, receiver_postback) {
 }
 
 // Send response message via the Send API
-function handlePostback(sender_psid, response) {
+function callSendAPI(sender_psid, response) {
     
 }
 

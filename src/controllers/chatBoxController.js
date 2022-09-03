@@ -1,5 +1,8 @@
 require('dotenv').config();
 
+const PAGE_ACCESS_TOKEN = process.env.PAGE_ACCESS_TOKEN;
+const VERIFY_TOKEN = process.env.VERIFY_TOKEN;
+
 let getHomePage = (req, res) => {
     return res.send("Hello")
 };
@@ -13,10 +16,13 @@ let postWebHook = (req, res) => {
         // Iterates over each entry - there may be multiple if batched
         body.entry.forEach(function (entry) {
 
-            // Gets the message. entry.messaging is an array, but
-            // will only ever contain one message, so we get index 0
+            // Gets the body of the webhook event
             let webhook_event = entry.messaging[0];
             console.log(webhook_event);
+
+            // Get the sender PSID
+            let sender_psid = webhook_event.sender.id;
+            console.log("Sender PSID: " + sender_psid);
         });
 
         // Returns a '200 OK' response to all requests
@@ -29,7 +35,6 @@ let postWebHook = (req, res) => {
 
 let getWebHook = (req, res) => {
     // Your verify token. Should be a random string
-    let VERIFY_TOKEN = process.env.VERIFY_TOKEN;
 
     // Parse the query params
     let mode = req.query['hub.mode'];
@@ -52,6 +57,21 @@ let getWebHook = (req, res) => {
         }
     }
 };
+
+// Handles message events
+function handleMessage(sender_psid, receiver_message) {
+
+}
+
+// Handles messaging_postbacks events
+function handlePostback(sender_psid, receiver_postback) {
+    
+}
+
+// Send response message via the Send API
+function handlePostback(sender_psid, response) {
+    
+}
 
 module.exports = {
     getHomePage: getHomePage,// key: value
